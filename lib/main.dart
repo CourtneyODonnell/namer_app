@@ -34,31 +34,51 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
+// ...
+
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+    var appState = context.watch<MyAppState>();  
+    var pair = appState.current;                 // ← Add this.
 
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text('Hello World! Here is a random idea:'),
-          ),
-          Text(pair.asLowerCase),
+          Text('A random AWESOME idea:'),
+          BigCard(pair: pair),                // ← Change to this.
           ElevatedButton(
-              onPressed: () {
+            onPressed: () {
               appState.getNext();
-              print('Button pressed');
-
             },
             child: Text('Next'),
           ),
         ],
       ),
     );
-
   }
 }
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context); //richer color theme
+
+    return Card(
+      color: theme.colorScheme.primary, //select primary color scheme
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(pair.asLowerCase),
+      ),
+    );
+  }
+}
+
+
