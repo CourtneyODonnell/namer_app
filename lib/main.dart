@@ -1,4 +1,5 @@
 import 'package:english_words/english_words.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,17 +44,20 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;                 // ← Add this.
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('A random AWESOME idea:'),
-          BigCard(pair: pair),                // ← Change to this.
-          ElevatedButton(
-            onPressed: () {
-              appState.getNext();
-            },
-            child: Text('Next'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, //center the column horizontally
+          children: [
+            Text('A random AWESOME idea:'),
+            BigCard(pair: pair),                // ← Change to this.
+            ElevatedButton(
+              onPressed: () {
+                appState.getNext();
+              },
+              child: Text('Next'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -72,14 +76,20 @@ class BigCard extends StatelessWidget {
     final theme = Theme.of(context); //richer color theme
     final style = theme.textTheme.displayMedium!.copyWith(
       color: theme.colorScheme.onPrimary, //select onPrimary color scheme
-
+      //decoration: TextDecoration.underline,
+      
     );
 
     return Card(
       color: theme.colorScheme.primary, //select primary color scheme
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase, style: style),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "S{pair.first} ${pair.second}",
+        ),
+
       ),
     );
   }
